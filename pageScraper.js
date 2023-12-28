@@ -4,6 +4,8 @@ const scraperObject = {
 		let page = await browser.newPage();
 		console.log(`Navigating to ${this.url}...`);
 		await page.goto(this.url);
+
+        await page.setViewport( { 'width' : 1920, 'height' : 1080 } );
         //type ID
         await page.type('input.w240', 'CD66356');
         //type Pass
@@ -14,4 +16,3 @@ const scraperObject = {
 }
 
 module.exports = scraperObject;
-
