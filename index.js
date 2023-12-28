@@ -1,4 +1,10 @@
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
+const axios = require('axios');
+let style = [];
+let values = [];
+let count = 0;
+
+const express = require('express');
 (async () => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -24,6 +30,11 @@ const handleUrlChange = async (newUrl) => {
     if (newUrl === 'https://salonboard.com/CLP/bt/top/') {
       console.log('URL search:');
       await page.goto('https://salonboard.com/CNB/draft/styleEdit/');
+      async () => {
+        // https://os3-318-48579.vs.sakura.ne.jp/api/style
+        const response = await axios.get("https://os3-318-48579.vs.sakura.ne.jp/api/style");
+        console.log("response.data: ",response.data);
+      }
     }
   };
   
@@ -35,3 +46,31 @@ const handleUrlChange = async (newUrl) => {
   });
 
 })();
+
+// function fetchData() {
+//     axios.get('https://os3-318-48579.vs.sakura.ne.jp/api/style')
+//   .then(response => {
+//     // Handle the response data
+//     // console.log("response.data: ", response.data);
+//     style = response.data;
+//     values = style.map((item, index) => {
+//         // console.log(`Item at index ${index}:`, item);
+//         console.log("item[index]: ", item);
+//         return item
+
+//     });
+//     // console.log("values[0]: ", values[0]);
+//     // console.log("values[1]: ", values[1]);
+//     // console.log("values[2]: ", values[2]);
+//     setTimeout(fetchData, 86400000);
+//     count++;
+//     console.log("count: ", count);
+//   })
+//   .catch(error => {
+//     // Handle any errors
+//     console.error(error);
+//   });
+// }
+
+// fetchData();
+
