@@ -49,6 +49,12 @@ const express = require("express");
         "T000848296"
       );
       console.log("select option ok");
+
+      // await page.click('input[id="agrFlgStyleImgId"]');
+      // console.log("input[1]: click");
+
+      await page.click('input[value="MC01"]');
+      console.log("input[value]: click");
       //   }
     }
   };
