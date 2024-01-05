@@ -11,7 +11,20 @@ const scraperObject = {
         //type Pass
         await page.type('input.loginPwInput', 'bridge123!!');
         //type login
-        await page.click('div.columnBlock.mt46.ml15 a');
+        await page.click('div.columnBlock.mt46.ml15 > a');
+
+        await page.waitForSelector('.section.cf #globalNavi');
+
+        let showButtonExist = false;
+        try{
+            const showButton = await page.$eval('a.cmsLink > img', a => a.textContent);
+            showButtonExist = true;
+        } catch{
+            showButtonExist = false;
+        }
+        if(showButtonExist){
+            await page.click('a.cmsLink > img');
+        }
 	}
 }
 

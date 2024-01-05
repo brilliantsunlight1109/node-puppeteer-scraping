@@ -1,8 +1,6 @@
 const puppeteer = require("puppeteer");
 const axios = require("axios");
-// let style = [];
-// let values = [];
-// let count = 0;
+const fs = require("fs");
 
 const express = require("express");
 (async () => {
@@ -22,8 +20,9 @@ const express = require("express");
 
   await page.type("input.loginPwInput", "bridge123!!");
 
-  await page.click("div.columnBlock.mt46.ml15 > a");
-
+  await page.click(
+    "form[id='idPasswordInputForm'] div.columnBlock02.mod_column03.cf > div.columnBlock.mt46.ml15 > a"
+  );
   console.log("button click");
 
   const handleUrlChange = async (newUrl) => {
@@ -35,14 +34,19 @@ const express = require("express");
       // const response = await axios.get("https://os3-318-48579.vs.sakura.ne.jp/api/style");
       // const radioInput = await page.$('#styleRegistFormat0');
       console.log("found");
-      await page.click("#styleRegistFormat1");
-      console.log("radio button ok");
-      // await page.click("input.translate1");
-      // console.log("checkbox button ok");
-      // await page.click("#agrFlgStyleImgId", (checkbox) => {
-      //   checkbox.checked = true;
-      //   console.log("checked true");
-      // });
+
+      //imgUpload
+      const imageBuffer = fs.readFileSync("./img/voice01.png");
+      console.log("imageBuffer: ", imageBuffer);
+      const base64Image = imageBuffer.toString('base64');
+      console.log("base64Image: ", base64Image);
+      const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+      console.log("dataUrl: ", dataUrl);
+      await page.evaluate((dataUrl) => {
+        const imgElement = document.getElementById('FRONT_IMG_ID_IMG');
+        imgElement.src = dataUrl;
+        console.log("image uploadd success");
+      }, dataUrl);
 
       await page.select(
         'select[name="frmStyleEditStylistCommentDto.stylistId"]',
@@ -50,11 +54,32 @@ const express = require("express");
       );
       console.log("select option ok");
 
-      // await page.click('input[id="agrFlgStyleImgId"]');
-      // console.log("input[1]: click");
+      await page.click(
+        'td.td_input_normal_color > table > tbody > tr > td > label > input[value="MC01"]'
+      );
+      console.log("input[value='MC01']: click");
+      await page.click(
+        'td.td_input_normal_color > table > tbody > tr > td > label > input[value="MC02"]'
+      );
+      console.log("input[value='MC02']: click");
+      await page.click(
+        'td.td_input_normal_color > table > tbody > tr > td > label > input[value="MC03"]'
+      );
+      console.log("input[value='MC03']: click");
+      await page.click(
+        'table.table_edit_store > tbody > tr > td.td_input_normal_color > table > tbody > tr > td > label > input[value="recommendHairAmountFlg01"]'
+      );
+      console.log("input[bottom-1]");
 
-      await page.click('input[value="MC01"]');
-      console.log("input[value]: click");
+      await page.click(
+        'table.table_edit_store > tbody > tr > td.td_input_normal_color > table > tbody > tr > td > label > input[value="recommendHairAmountFlg02"]'
+      );
+      console.log("input[bottom-2]");
+
+      await page.click(
+        'table.table_edit_store > tbody > tr > td.td_input_normal_color > table > tbody > tr > td > label > input[value="recommendHairAmountFlg03"]'
+      );
+      console.log("input[bottom-3]");
       //   }
     }
   };
