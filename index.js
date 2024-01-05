@@ -36,14 +36,19 @@ const express = require("express");
       console.log("found");
 
       //imgUpload
-      const imageBuffer = fs.readFileSync("./img/voice01.png");
-      console.log("imageBuffer: ", imageBuffer);
-      const base64Image = imageBuffer.toString('base64');
-      console.log("base64Image: ", base64Image);
-      const dataUrl = `data:image/jpeg;base64,${base64Image}`;
-      console.log("dataUrl: ", dataUrl);
+      // const imageBuffer = fs.readFileSync("./img/voice01.png");
+      // console.log("imageBuffer: ", imageBuffer);
+      // const base64Image = imageBuffer.toString('base64');
+      // console.log("base64Image: ", base64Image);
+      // const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+      // console.log("dataUrl: ", dataUrl);
+
+      const pathToImage = "./img/voice01.png";
+      const base64Image = fs.readFileSync(pathToImage, "base64");
+      const dataUrl = `data:image/png;base64,${base64Image}`;
+
       await page.evaluate((dataUrl) => {
-        const imgElement = document.getElementById('FRONT_IMG_ID_IMG');
+        const imgElement = document.getElementById("FRONT_IMG_ID_IMG");
         imgElement.src = dataUrl;
         console.log("image uploadd success");
       }, dataUrl);
